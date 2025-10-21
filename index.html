@@ -55,12 +55,10 @@
         <div class="timer">الزمن: <span id="timer">90</span>s</div>
       </div>
 
-      <!-- Joystick (left) -->
       <div id="joystickContainer">
         <div id="joystickBase"><div id="joystickKnob"></div></div>
       </div>
 
-      <!-- Action buttons (right) styled like FIFA Mobile) -->
       <div id="actions">
         <button class="action-btn" id="skillBtn" title="مهارة">★</button>
         <button class="action-btn" id="passBtn" title="تمرير">➤</button>
@@ -70,9 +68,7 @@
       <button id="exitMatch" class="small secondary">خروج</button>
     </section>
 
-    <!-- باقي الأقسام كما هي (wallet, settings, result) -->
     <section id="wallet" class="panel hidden">
-      <!-- محتوى المحفظة كما في الكود الأصلي -->
       <h2>المحفظة والشحن</h2>
       <div class="wallet-card">
         <div>رصيدك</div>
@@ -109,7 +105,6 @@
       <p id="resultText"></p>
       <button id="resultBack" class="btn">العودة للقائمة</button>
     </section>
-
   </main>
 
   <footer class="bottombar">نسخة تجريبية — لا تستخدم للمعاملات الحقيقية</footer>
@@ -118,7 +113,6 @@
 <script src="game.js"></script>
 
 <script>
-// وظيفة ملء الشاشة
 function openFullscreen() {
   const canvas = document.getElementById('gameCanvas');
   if (canvas.requestFullscreen) canvas.requestFullscreen();

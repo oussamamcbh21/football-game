@@ -1,14 +1,99 @@
-<!-- ... نفس الهيكل السابق ... -->
-<section id="menu" class="panel">
-  <h2>القائمة الرئيسية</h2>
-  <button id="playOffline" class="btn primary">ابدأ مباراة (أوفلاين)</button>
-  <button id="playOnline" class="btn">اللعب أونلاين</button>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Football Pro Prototype</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand">Football Pro</div>
+    <div class="status">رصيد: <span id="coins">100</span> ⍟</div>
+  </header>
 
-  <!-- Private Match -->
-  <input id="friendId" placeholder="اكتب معرف صديقك">
-  <button id="playPrivate" class="btn secondary">اللعب مع صديق</button>
+  <main id="main">
+    <!-- القائمة الرئيسية -->
+    <section id="menu" class="panel">
+      <h2>القائمة الرئيسية</h2>
+      <button id="playOffline" class="btn primary">ابدأ مباراة (أوفلاين)</button>
+      <button id="playOnline" class="btn">اللعب أونلاين</button>
+      <input id="friendId" placeholder="اكتب معرف صديقك">
+      <button id="playPrivate" class="btn secondary">اللعب مع صديق</button>
+      <button id="walletBtnMain" class="btn">المحفظة</button>
+      <button id="settingsBtn" class="btn">الإعدادات</button>
+    </section>
 
-  <button id="walletBtnMain" class="btn">المحفظة</button>
-  <button id="settingsBtn" class="btn">الإعدادات</button>
-  <small class="hint">نموذج أولي: الشحن والسحب يدوي عبر لوحة المشرف.</small>
-</section>
+    <!-- منطقة اللعبة -->
+    <section id="gameArea" class="panel hidden">
+      <canvas id="gameCanvas" width="960" height="540"></canvas>
+      <div id="hud">
+        <div class="score">النتيجة: <span id="score">0 - 0</span></div>
+        <div class="timer">الزمن: <span id="timer">90</span>s</div>
+      </div>
+      <div id="joystickContainer">
+        <div id="joystickBase"><div id="joystickKnob"></div></div>
+      </div>
+      <div id="actions">
+        <button class="action-btn" id="skillBtn" title="مهارة">★</button>
+        <button class="action-btn" id="passBtn" title="تمرير">➤</button>
+        <button class="action-btn shoot" id="shootBtn" title="تسديد">⚽</button>
+      </div>
+      <button id="exitMatch" class="small secondary">خروج</button>
+    </section>
+
+    <!-- المحفظة -->
+    <section id="wallet" class="panel hidden">
+      <h2>المحفظة والشحن</h2>
+      <div class="wallet-card">
+        <div>رصيدك</div>
+        <div class="amount"><span id="walletCoins">100</span> coins</div>
+      </div>
+      <h3>شحن</h3>
+      <p>USDT (TRC20): <code id="usdt">TLpXEP8fvhRwSoCywr5Fi6a1uPgnHh793g</code></p>
+      <p>Baridi Mob: <code id="baridi">00799999004096358609</code></p>
+      <label>رفع إثبات الشحن:</label>
+      <input type="file" id="proofFile" accept="image/*">
+      <input id="proofAmount" placeholder="المبلغ">
+      <select id="proofMethod"><option value="usdt">USDT</option><option value="baridi">Baridi Mob</option></select>
+      <button id="submitProof" class="btn">إرسال إثبات الشحن</button>
+      <h3>سحب</h3>
+      <input id="withdrawAmount" placeholder="المبلغ"><br>
+      <select id="withdrawMethod"><option value="baridi">Baridi Mob</option><option value="usdt">USDT</option></select>
+      <input id="withdrawDetails" placeholder="الاسم الكامل أو عنوان السحب">
+      <button id="requestWithdraw" class="btn">طلب سحب</button>
+      <button id="backToMenu" class="btn secondary">العودة</button>
+    </section>
+
+    <!-- الإعدادات -->
+    <section id="settings" class="panel hidden">
+      <h2>الإعدادات</h2>
+      <label>حساسية الجويستيك</label><input id="joySensitivity" type="range" min="1" max="10" value="4">
+      <label>مستوى الصوت</label><input id="volume" type="range" min="0" max="10" value="6">
+      <button id="closeSettings" class="btn secondary">إغلاق</button>
+    </section>
+
+    <!-- النتائج -->
+    <section id="result" class="panel hidden">
+      <h2>النتيجة</h2>
+      <p id="resultText"></p>
+      <button id="resultBack" class="btn">العودة للقائمة</button>
+    </section>
+  </main>
+
+  <footer class="bottombar">نسخة تجريبية — لا تستخدم للمعاملات الحقيقية</footer>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="game.js"></script>
+
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js').catch(()=>console.log('SW registration failed'));
+}
+</script>
+</body>
+</html>

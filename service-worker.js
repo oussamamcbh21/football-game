@@ -1,14 +1,3 @@
-self.addEventListener('install', function(event) {
-  self.skipWaiting();
-});
-self.addEventListener('activate', function(event) {
-  event.waitUntil(self.clients.claim());
-});
-self.addEventListener('fetch', function(event) {
-  // Basic network-first for navigation and assets
-  if (event.request.mode === 'navigate') {
-    event.respondWith(fetch(event.request).catch(()=>caches.match('offline.html')));
-    return;
-  }
-  event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));
-});
+const cacheName='football-pro-cache-v1';
+const assets=['/','index.html','style.css','game.js','manifest.json'];
+self.addEventListener('install',e=>{e.waitUntil
